@@ -1,0 +1,6 @@
+1 - Ambiente
+    python -m venv venv
+    venv/Scripts/Activate
+
+    pip install flet
+    pip install requests
