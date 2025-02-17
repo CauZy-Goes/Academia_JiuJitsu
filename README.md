@@ -1,4 +1,4 @@
-# DashBoard Jiu Jitsu
+# 🥋 DashBoard Jiu Jitsu 🥋
 
 Este é um sistema simples para gerenciar alunos e aulas de Jiu Jitsu, desenvolvido com [Flet](https://flet.dev/) e consumindo minha api(https://github.com/CauZy-Goes/Academia_JiuJitsu_API) API via `requests`.
 
