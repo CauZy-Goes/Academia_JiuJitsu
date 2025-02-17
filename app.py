@@ -154,6 +154,58 @@ def main(page: ft.Page):
     progress_button = ft.ElevatedButton(text="Consultar Progresso", on_click=consultar_progresso_click)
     progresso_tab = ft.Column([email_progress_field, progress_button, progress_result], scroll=True)
 
+    ## atualizar aluno
+    
+    id_aluno_field = ft.TextField(label="ID do Aluno")
+    nome_update_field = ft.TextField(label="Novo Nome")
+    email_update_field = ft.TextField(label="Novo Email")
+    faixa_update_field = ft.TextField(label="Nova Faixa")
+    data_nascimento_update_field = ft.TextField(label="Nova Data de Nascimento (YYYY-MM-DD)")
+    update_result = ft.Text()
+
+    def atualizar_aluno_click(e):
+        try:
+            aluno_id = id_aluno_field.value
+            if not aluno_id:
+                update_result.value = "ID do aluno é necessário."
+            else:
+                payload = {}
+                if nome_update_field.value:
+                    payload["nome"] = nome_update_field.value
+                if email_update_field.value:
+                    payload["email"] = email_update_field.value
+                if faixa_update_field.value:
+                    payload["faixa"] = faixa_update_field.value
+                if data_nascimento_update_field.value:
+                    payload["data_nascimento"] = data_nascimento_update_field.value
+
+                response = requests.put(API_BASE_URL + f"/alunos/{aluno_id}", json=payload)
+                
+                if response.status_code == 200:
+                    aluno = response.json()
+                    update_result.value = f"Aluno atualizado: {aluno}"
+                else:
+                    update_result.value = f"Erro: {response.text}"
+        except Exception as ex:
+            update_result.value = f"Exceção: {ex}"
+        page.update()
+
+    update_button = ft.ElevatedButton(text="Atualizar Aluno", on_click=atualizar_aluno_click)
+
+    atualizar_tab = ft.Column(
+        [
+            id_aluno_field,
+            nome_update_field,
+            email_update_field,
+            faixa_update_field,
+            data_nascimento_update_field,
+            update_button,
+            update_result,
+        ],
+        scroll=True,
+    )
+    
+
 
     ## tabs
 
@@ -164,7 +216,7 @@ def main(page: ft.Page):
             ft.Tab(text="Listar Aluno", content=listar_alunos_tab),
             ft.Tab(text="Aula realizada", content=aula_tab),
             ft.Tab(text="Progresso Do Aluno", content=progresso_tab),
-
+            ft.Tab(text="Atualizar Aluno", content=atualizar_tab),
         ]
     )
 
