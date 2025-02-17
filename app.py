@@ -5,7 +5,7 @@ import requests
 API_BASE_URL = "http://127.0.0.1:8000/api"
 
 def main(page: ft.Page):
-    page.title = "Exemplo"
+    page.title = "DashBoard Jiu Jitsu"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
 
     #Criar Aluno
@@ -180,7 +180,7 @@ def main(page: ft.Page):
                     payload["data_nascimento"] = data_nascimento_update_field.value
 
                 response = requests.put(API_BASE_URL + f"/alunos/{aluno_id}", json=payload)
-                
+
                 if response.status_code == 200:
                     aluno = response.json()
                     update_result.value = f"Aluno atualizado: {aluno}"
