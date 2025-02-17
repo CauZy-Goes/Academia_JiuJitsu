@@ -50,7 +50,6 @@ def main(page: ft.Page):
 
     students_table = ft.DataTable(
         columns=[
-            ft.DataColumn(ft.Text("ID")),
             ft.DataColumn(ft.Text("Nome")),
             ft.DataColumn(ft.Text("Email")),
             ft.DataColumn(ft.Text("Faixa")),
@@ -65,12 +64,13 @@ def main(page: ft.Page):
             response = requests.get(API_BASE_URL + "/alunos/")
             if response.status_code == 200:
                 alunos = response.json()
+
                 # Limpa as linhas anteriores
                 students_table.rows.clear()
+
                 for aluno in alunos:
                     row = ft.DataRow(
                         cells=[
-                            ft.DataCell(ft.Text(str(aluno.get("id", "")))),
                             ft.DataCell(ft.Text(aluno.get("nome", ""))),
                             ft.DataCell(ft.Text(aluno.get("email", ""))),
                             ft.DataCell(ft.Text(aluno.get("faixa", ""))),
@@ -86,6 +86,7 @@ def main(page: ft.Page):
         page.update()
 
     list_button = ft.ElevatedButton(text="Listar Alunos", on_click=listar_alunos_click)
+
     listar_alunos_tab = ft.Column([list_button, students_table, list_result], scroll=True)
 
 
@@ -94,7 +95,8 @@ def main(page: ft.Page):
     tabs = ft.Tabs (
         selected_index=0,
         tabs=[
-            ft.Tab(text="Criar_Aluno", content=criar_aluno_tab)
+            ft.Tab(text="Criar Aluno", content=criar_aluno_tab),
+            ft.Tab(text="Listar Aluno", content=listar_alunos_tab)
         ]
     )
 
